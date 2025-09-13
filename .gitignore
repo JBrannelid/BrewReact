@@ -25,4 +25,4 @@ dist-ssr
 
 # Environment variables (keep env example file)
 .env*
-!.env.exemple
+!.env.example

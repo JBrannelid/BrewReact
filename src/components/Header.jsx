@@ -1,7 +1,16 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
+import Contact from "./Contact";
 
 const Header = () => {
+  const [showContactMenu, setShowContactMenu] = useState(false);
+
+  const handleContactClick = (e) => {
+    e.preventDefault();
+    setShowContactMenu(true);
+  };
+
   return (
     <div
       className="min-h-screen bg-cover bg-center flex items-center w-full overflow-hidden"
@@ -19,14 +28,18 @@ const Header = () => {
           >
             Reservations
           </Link>
-          <a
-            href="#Contact"
+          <button
+            onClick={handleContactClick}
             className="glass-btn-dark text-primary-text-light font-medium"
           >
             Contact Us
-          </a>
+          </button>
         </div>
       </div>
+      <Contact
+        showContactMenu={showContactMenu}
+        setShowContactMenu={setShowContactMenu}
+      />
     </div>
   );
 };

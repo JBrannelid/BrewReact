@@ -1,4 +1,4 @@
-![Café Interior](https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop&q=80)
+![Café Header](./src/assets/README_Img.png)
 
 # ☕ BrewReact - Table Reservation SPA
 

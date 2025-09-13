@@ -5,8 +5,8 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { MdSchedule } from "react-icons/md";
 
 // We will accept background scrolling when contact modal is open
-const Contact = ({ showContactMenu, setShowContactMenu }) => {
-  if (!showContactMenu) return null;
+const Contact = ({ showContactModal, setShowContactModal }) => {
+  if (!showContactModal) return null;
 
   return (
     <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
@@ -14,7 +14,7 @@ const Contact = ({ showContactMenu, setShowContactMenu }) => {
       <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl border-2 border-white/20 shadow-2xl p-8 max-w-md w-full mx-4">
         {/* Close Button */}
         <button
-          onClick={() => setShowContactMenu(false)}
+          onClick={() => setShowContactModal(false)}
           className="absolute top-4 right-4 glass-btn-light p-2 md:p-3 rounded-full border-2 border-white/15 hover:!translate-x-0 hover:!translate-y-0"
           aria-label="Close contact modal"
         >

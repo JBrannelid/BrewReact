@@ -1,0 +1,141 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&family=Playfair+Display:wght@400;500;700&display=swap");
+@import "tailwindcss";
+
+/* Theme configuration */
+@theme {
+  /* Text Colors */
+  --color-primary-text-light: #ffffff;
+  --color-primary-text-dark: #4f2203;
+  --color-primary-text-muted: #374151;
+  --color-primary-text-body: #141313;
+  --color-accent-orange: #fcc048;
+
+  /* Background Colors */
+  --color-background: #edeae1;
+
+  /* Warning Colors */
+  --color-warning-300: #ffc13d;
+  --color-warning-400: #ffa600;
+
+  /* Error Colors */
+  --color-error-400: #fc6455;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+
+  /* Font Families */
+  --font-heading: "Playfair Display", serif;
+  --font-body: "Nunito Sans", sans-serif;
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* Line Heights */
+  --line-height-tight: 120%;
+  --line-height-normal: 150%;
+
+  /* Font Sizes */
+  --fontsize-xxs: 0.625rem; /* 10px */
+}
+
+/* Base styles */
+@layer base {
+  html {
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-light);
+    line-height: var(--line-height-tight);
+  }
+
+  body {
+    background-color: var(--color-background);
+  }
+
+  html,
+  body,
+  #root {
+    margin: 0;
+    padding: 0;
+    height: 100dvh;
+    height: -webkit-fill-available;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading) !important;
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-tight);
+  }
+
+  p,
+  span,
+  div,
+  li,
+  input,
+  textarea,
+  select,
+  button {
+    font-family: var(--font-body);
+    color: var(--color-primary-text-body);
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Activate effects on touch screens desktop */
+@custom-variant hover (&:hover);
+@custom-variant focus (&:focus);
+@custom-variant active (&:active);
+
+/* Component styles */
+@layer components {
+  .glass-btn-light,
+  .glass-btn-dark {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    border-radius: 12px;
+    padding: 12px 24px;
+    transition: all 0.3s ease-out;
+  }
+
+  /* Ligt Btn - rgba for opacity layer*/
+  .glass-btn-light {
+    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  }
+  .glass-btn-light:hover {
+    background: rgba(0, 0, 0, 0.12);
+    border-color: rgba(0, 0, 0, 0.18);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Dark Btn */
+  .glass-btn-dark {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+  .glass-btn-dark:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  }
+}

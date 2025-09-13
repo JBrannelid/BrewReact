@@ -1,22 +1,30 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import HomePage from "../pages/HomePage";
-import BookingPage from "../pages/BookingPage";
+import NotFoundPage from "../pages/NotFoundPage";
 
 // Configure and define the routes with  React Router v7
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <App />,
+      errorElement: <NotFoundPage />,
+      children: [
+        {
+          index: true,
+          element: <HomePage />,
+        },
+        {
+          path: "*",
+          element: <NotFoundPage />,
+        },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: "/booking",
-        element: <BookingPage />,
-      },
-    ],
-  },
-]);
+    future: {
+      v7_startTransition: true,
+    },
+  }
+);

@@ -1,14 +1,20 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Contact from "./Contact";
+import Bookings from "./Bookings";
 
 const Header = () => {
-  const [showContactMenu, setShowContactMenu] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
   const handleContactClick = (e) => {
     e.preventDefault();
-    setShowContactMenu(true);
+    setShowContactModal(true);
+  };
+
+  const handleBookingClick = (e) => {
+    e.preventDefault();
+    setShowBookingModal(true);
   };
 
   return (
@@ -22,12 +28,12 @@ const Header = () => {
           Book Your Seat for the Perfect Brew
         </h2>
         <div className="space-x-6 mt-16">
-          <Link
-            to="/booking"
+          <button
+            onClick={handleBookingClick}
             className="glass-btn-dark text-primary-text-light font-medium"
           >
             Reservations
-          </Link>
+          </button>
           <button
             onClick={handleContactClick}
             className="glass-btn-dark text-primary-text-light font-medium"
@@ -37,8 +43,12 @@ const Header = () => {
         </div>
       </div>
       <Contact
-        showContactMenu={showContactMenu}
-        setShowContactMenu={setShowContactMenu}
+        showContactModal={showContactModal}
+        setShowContactModal={setShowContactModal}
+      />
+      <Bookings
+        showBookingModal={showBookingModal}
+        setShowBookingModal={setShowBookingModal}
       />
     </div>
   );

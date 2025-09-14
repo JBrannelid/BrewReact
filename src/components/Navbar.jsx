@@ -56,39 +56,49 @@ const Navbar = () => {
       </nav>
       {/* Navigation (Mobile) */}
       <nav
-        className={`md:hidden ${
-          showMobileMenu ? "fixed w-full" : "h-0 w-0"
-        } right-0 top-0 bottom-0 overflow-hidden bg-background translate-all duration-200 ease-in`}
+        className={`md:hidden fixed top-0 bottom-0 right-0 w-1/2 max-h-10/12
+          overflow-hidden bg-white/10 backdrop-blur-sm rounded-l-2xl border-2 border-white/20 shadow-2xl
+          transition-transform duration-200 ease-in
+          ${showMobileMenu ? "translate-x-0" : "translate-x-full"}
+          ${!showMobileMenu && "pointer-events-none"}`}
       >
         <div className="flex justify-end p-6 cursor-pointer">
           {/* Action: Close nav menu */}
-          <RxCross2
-            className="w-10 h-10"
+          <button
             onClick={() => setShowMobileMenu(false)}
-          />
+            className="absolute top-5 right-4 glass-btn-light p-2 md:p-3 rounded-full border border-white/15"
+            aria-label="Close navigation menu"
+          >
+            <RxCross2 className="w-6 h-6 text-primary-text-light" />
+          </button>
         </div>
-        <ul className="flex flex-col items-center gap-2 mt-5 px-5 text-lg font-semibold">
-          <li className="px-4 py-2 rounded-full inline-block text-primary-text-dark">
-            <Link to="/" onClick={() => setShowMobileMenu(false)}>
+        <ul className="flex flex-col items-center gap-6 mt-10 px-5 text-lg font-semibold">
+          <li className="px-4 py-2 rounded-full inline-block text-primary-text-light">
+            <Link
+              to="/"
+              onClick={() => setShowMobileMenu(false)}
+              className="no-underline inline-block transition-transform duration-300 ease-in-out hover:scale-110"
+            >
               Home
             </Link>
           </li>
-          <li className="px-4 py-2 rounded-full inline-block text-primary-text-dark">
-            <a href="#About" onClick={() => setShowMobileMenu(false)}>
+
+          <li className="px-4 py-2 rounded-full inline-block text-primary-text-light">
+            <a
+              href="#About"
+              className="no-underline inline-block transition-transform duration-300 ease-in-out hover:scale-110"
+              onClick={() => setShowMobileMenu(false)}
+            >
               About
             </a>
           </li>
-          <li className="px-4 py-2 rounded-full inline-block text-primary-text-dark">
-            <Link to="/booking" onClick={() => setShowMobileMenu(false)}>
-              Book Table
-            </Link>
-          </li>
-          <li className="px-4 py-2 rounded-full inline-block text-primary-text-dark">
+          <li className="px-4 py-2 rounded-full inline-block text-primary-text-light">
             <a
               href={import.meta.env.VITE_PUBLIC_WEB}
               // Open up a new browser tab
               target="_blank"
               rel="noopener noreferrer"
+              className="no-underline inline-block transition-transform duration-300 ease-in-out hover:scale-110"
             >
               Menu
             </a>

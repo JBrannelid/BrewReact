@@ -110,7 +110,7 @@
     position: relative;
     border-radius: 12px;
     padding: 12px 24px;
-    transition: all 0.3s ease-out;
+    transition: all 0.3s ease-in-out;
   }
 
   /* Ligt Btn - rgba for opacity layer*/
@@ -122,7 +122,7 @@
   .glass-btn-light:hover {
     background: rgba(0, 0, 0, 0.12);
     border-color: rgba(0, 0, 0, 0.18);
-    transform: translateY(-2px);
+    transform: scale(1.05);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
   }
 
@@ -135,7 +135,7 @@
   .glass-btn-dark:hover {
     background: rgba(255, 255, 255, 0.15);
     border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
+    transform: scale(1.05);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
   }
 }

@@ -11,7 +11,7 @@ const Contact = ({ showContactModal, setShowContactModal }) => {
   return (
     <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
       {/* Contact modal container */}
-      <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl border-2 border-white/20 shadow-2xl p-8 max-w-md w-full mx-4">
+      <div className="relative glass-modal p-8 max-w-md w-full mx-4">
         {/* Close Button */}
         <button
           onClick={() => setShowContactModal(false)}

@@ -57,7 +57,7 @@ const Navbar = () => {
       {/* Navigation (Mobile) */}
       <nav
         className={`md:hidden fixed top-0 bottom-0 right-0 w-1/2 max-h-10/12
-          overflow-hidden bg-white/10 backdrop-blur-sm rounded-l-2xl border-2 border-white/20 shadow-2xl
+          overflow-hidden glass-modal
           transition-transform duration-200 ease-in
           ${showMobileMenu ? "translate-x-0" : "translate-x-full"}
           ${!showMobileMenu && "pointer-events-none"}`}

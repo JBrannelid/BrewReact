@@ -1,17 +1,19 @@
+import { RxCross2 } from "react-icons/rx";
+
 const Bookings = ({ showBookingModal, setShowBookingModal }) => {
   if (!showBookingModal) return null;
 
   return (
     <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
       {/* Contact modal container */}
-      <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl border-2 border-white/20 shadow-2xl p-8 max-w-md w-full mx-4">
+      <div className="relative glass-modal p-8 max-w-md w-full mx-4">
         {/* Close Button */}
         <button
           onClick={() => setShowBookingModal(false)}
           className="absolute top-4 right-4 glass-btn-light p-2 md:p-3 rounded-full border-2 border-white/15 hover:!translate-x-0 hover:!translate-y-0"
           aria-label="Close contact modal"
         >
-          {/* <RxCross2 className="w-6 h-6 text-primary-text-light" /> */}
+          <RxCross2 className="w-6 h-6 text-primary-text-light" />
         </button>
         <h1 className="text-4xl font-bold text-center mb-8">Book Your Table</h1>
         {/*

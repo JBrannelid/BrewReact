@@ -69,7 +69,7 @@ const Navbar = () => {
             className="absolute top-5 right-4 glass-btn-light p-2 md:p-3 rounded-full border border-white/15"
             aria-label="Close navigation menu"
           >
-            <RxCross2 className="w-6 h-6 text-primary-text-light" />
+            <RxCross2 className="w-5 h-5 md:w-6 md:h-6 text-primary-text-light" />
           </button>
         </div>
         <ul className="flex flex-col items-center gap-6 mt-10 px-5 text-lg font-semibold">

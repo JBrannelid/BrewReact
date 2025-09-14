@@ -18,7 +18,7 @@ const Contact = ({ showContactModal, setShowContactModal }) => {
           className="absolute top-4 right-4 glass-btn-light p-2 md:p-3 rounded-full border-2 border-white/15 hover:!translate-x-0 hover:!translate-y-0"
           aria-label="Close contact modal"
         >
-          <RxCross2 className="w-6 h-6 text-primary-text-light" />
+          <RxCross2 className="w-5 h-5 md:w-6 md:h-6 text-primary-text-light" />
         </button>
 
         <div className="text-center text-primary-text-light">

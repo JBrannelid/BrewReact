@@ -17,9 +17,9 @@ const SelectDate = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-      <div className="flex items-center justify-center space-x-12 mb-12">
-        <div className="bg-white/30 p-6 rounded-2xl">
+    <div className="flex flex-col items-center justify-center w-full mx-auto">
+      <div className="flex items-center justify-center mb-4">
+        <div className="bg-white/30 rounded-xl">
           {/* Date picker from mui community component */}
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar

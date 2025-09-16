@@ -115,7 +115,7 @@ const Bookings = ({ showBookingModal, setShowBookingModal }) => {
 
   return (
     <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
-      <div className="relative glass-modal flex flex-col p-8 max-w-4xl w-full mx-4 min-h-80">
+      <div className="relative glass-modal flex flex-col p-8">
         {/* Show close btn on first index  */}
         {currentStep === 0 && (
           <button
@@ -123,13 +123,13 @@ const Bookings = ({ showBookingModal, setShowBookingModal }) => {
             className="absolute top-4 right-4 glass-btn-light p-2 md:p-3 rounded-full border-2 border-white/15 hover:!translate-x-0 hover:!translate-y-0"
             aria-label="Close booking modal"
           >
-            <RxCross2 className="w-5 h-5 md:w-6 md:h-6 text-primary-text-light" />
+            <RxCross2 className="w-4 h-4 lg:w-5 lg:h-5 text-primary-text-light" />
           </button>
         )}
 
         {/* Display current title and render components */}
         <section className="mb-4">
-          <h1 className="text-xl md:text-3xl lg:text-4xl font-bold text-center mb-10 text-primary-text-light">
+          <h1 className="text-lg md:text-2xl lg:text-3xl font-bold text-center mb-10 text-primary-text-light">
             {steps[currentStep].label}
           </h1>
           <div>{steps[currentStep].component}</div>

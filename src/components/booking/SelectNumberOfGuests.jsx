@@ -24,8 +24,8 @@ const SelectNumberOfGuests = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-      <div className="flex items-center justify-center space-x-12 mb-12">
+    <div className="flex flex-col items-center justify-center w-full mx-auto">
+      <div className="flex items-center justify-center space-x-10 mb-10">
         {/* Decrement Btn */}
         <button
           onClick={handleDecrement}
@@ -33,11 +33,11 @@ const SelectNumberOfGuests = () => {
           className="border-2 text-primary-text-light/40 rounded-full p-2"
           aria-label="Decrease number of guests"
         >
-          <HiMinus className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 text-primary-text-light" />
+          <HiMinus className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-primary-text-light" />
         </button>
 
         {/* Guest Count Display */}
-        <div className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary-text-light">
+        <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-text-light">
           {numberOfGuests}
         </div>
 
@@ -48,12 +48,12 @@ const SelectNumberOfGuests = () => {
           className="border-2 text-primary-text-light/40 rounded-full p-2"
           aria-label="Increase number of guests"
         >
-          <HiPlus className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 text-primary-text-light" />
+          <HiPlus className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-primary-text-light" />
         </button>
       </div>
 
       {/* Contact Info for Larger Groups */}
-      <p className="text-primary-text-light/70 text-center text-sm max-w-md">
+      <p className="text-primary-text-light/80 text-center text-sm max-w-md">
         For groups larger than 8 people, please contact the café directly
       </p>
     </div>

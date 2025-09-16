@@ -1,10 +1,10 @@
-import Header from "../components/Header";
-import About from "../components/About";
+import Hero from "../components/sections/Hero";
+import About from "../components/sections/About";
 
 const HomePage = () => {
   return (
     <>
-      <Header />
+      <Hero />
       <About />
     </>
   );

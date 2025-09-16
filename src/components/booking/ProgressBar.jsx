@@ -16,7 +16,7 @@ const ProgressBar = ({ currentStep, totalSteps = 3 }) => {
   // Display data for each step
   const displayData = [
     // Step 0
-    numberOfGuests > 0 ? `${numberOfGuests}` : null,
+    numberOfGuests > 0 ? `${numberOfGuests} guests` : null,
     // Step 1
     selectedDate
       ? // Format date to "DD MMM"
@@ -45,12 +45,12 @@ const ProgressBar = ({ currentStep, totalSteps = 3 }) => {
               <div
                 className={`
                   relative flex items-center justify-center 
-                  w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full transition-all duration-300
+                  w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full transition-all duration-300
                   ${
                     isCurrentStep
-                      ? "bg-primary-text-light transform scale-120"
+                      ? "bg-primary-text-light transform scale-110"
                       : isCompletedStep
-                        ? "bg-primary-text-light/70"
+                        ? "bg-green-500/20"
                         : "bg-primary-text-light/20"
                   }
                 `}

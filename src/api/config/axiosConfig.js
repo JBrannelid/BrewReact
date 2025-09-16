@@ -13,10 +13,10 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request
   .use
-  // Retreive token from Redux OR context Hook
+  // Ex. Retreive token from Redux OR context Hook
   ();
 
-// Log global responses and errors
+// Global responses and errors
 axiosInstance.interceptors.response.use(
   (response) => {
     console.log("Response:", response);
@@ -31,10 +31,14 @@ axiosInstance.interceptors.response.use(
         break;
       case 401:
         console.log("Unauthorized: Please log in again");
-        // Clear stored tokens and redirect to login
+        // Clear/dispatch stored tokens and redirect to login
+        break;
+      case 403:
+        console.log("Unauthorized: Please log in again");
+        // Clear/dispatch stored tokens and redirect to login
         break;
       case 404:
-        console.log("The resource ypu searh for was not found");
+        console.log("The resource you searh for was not found");
         break;
       case 500:
         console.log("Internal Server Error");

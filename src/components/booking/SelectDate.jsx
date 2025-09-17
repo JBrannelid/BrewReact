@@ -26,32 +26,6 @@ const SelectDate = () => {
               value={selectedDate ? dayjs(selectedDate) : null}
               onChange={handleDateChange}
               disablePast
-              sx={{
-                // Apply white color to calendar
-                color: "#ffffff",
-
-                // Apply white color to all elements
-                "& *": {
-                  color: "#ffffff !important",
-                },
-
-                // Increase font size on header
-                "& .MuiTypography-root": {
-                  fontSize: "1.2rem",
-                },
-
-                // Increase font size on daycells
-                "& .MuiPickersDay-root": {
-                  fontSize: "1.1rem",
-                },
-
-                // Increase font size on navigation btns
-                "& .MuiPickersArrowSwitcher-root": {
-                  "& svg": {
-                    fontSize: "2rem",
-                  },
-                },
-              }}
             />
           </LocalizationProvider>
         </div>

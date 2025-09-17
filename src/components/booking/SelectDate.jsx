@@ -26,6 +26,8 @@ const SelectDate = () => {
               value={selectedDate ? dayjs(selectedDate) : null}
               onChange={handleDateChange}
               disablePast
+              views={["day"]}
+              openTo="day"
             />
           </LocalizationProvider>
         </div>

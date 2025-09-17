@@ -8,21 +8,15 @@ import { useState, useEffect } from "react";
 import { GrPrevious } from "react-icons/gr";
 import { GrNext } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
-import { FaRegCircleCheck } from "react-icons/fa6";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setError,
-  setLoading,
-  setAvailableTables,
-  clearError,
-} from "../../redux/reducers/bookingSlice";
+import { resetBooking } from "../../redux/reducers/bookingSlice";
 import useGetAvailableTables from "../../hooks/bookings/useGetAvailableTables";
 import ProgressBar from "../booking/ProgressBar";
 
 const Bookings = ({ showBookingModal, setShowBookingModal }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const dispatch = useDispatch();
-  const { selectedDate, selectedTime, numberOfGuests, selectedTable } =
+  const { selectedDate, selectedTime, numberOfGuests, selectedTable, error } =
     useSelector((state) => state.booking);
   const { getAvailableTables } = useGetAvailableTables();
 
@@ -36,7 +30,10 @@ const Bookings = ({ showBookingModal, setShowBookingModal }) => {
     // Step 3 - Find available tables
     { label: "Find available table", component: <SelectTable /> },
     // Step 4 - Leave contact details and wrap up reservation
-    { label: "Just a Few Details", component: <ConfirmBooking /> },
+    {
+      label: "Just a few details",
+      component: <ConfirmBooking onSuccess={() => setCurrentStep(5)} />,
+    },
     // Step 5 - Confirm bookinG and display a booking.nr?
     { label: "Here's Your Confirmation", component: <BookingConfirmation /> },
   ];
@@ -79,31 +76,20 @@ const Bookings = ({ showBookingModal, setShowBookingModal }) => {
 
   const nextStep = async () => {
     if (!isStepValid()) {
-      dispatch(setError("Please complete fields before continuing"));
       return;
     }
 
-    // Get availble table when going to step 3
+    // Get available tables when going to step 3 - Now using consistent hook pattern
     if (currentStep === 2) {
-      dispatch(setLoading(true));
-      dispatch(clearError());
+      await getAvailableTables({
+        bookingDate: selectedDate,
+        bookingTime: selectedTime,
+        numberGuests: numberOfGuests,
+      });
 
-      try {
-        // Call api endpoint
-        const response = await getAvailableTables({
-          bookingDate: selectedDate,
-          bookingTime: selectedTime,
-          numberGuests: numberOfGuests,
-        });
-
-        dispatch(setAvailableTables(response.data || []));
-      } catch (error) {
-        dispatch(
-          setError("Failed to load available tables. Please try again.")
-        );
-        return; // Stay on the same step if error occurs
-      } finally {
-        dispatch(setLoading(false));
+      // Don't proceed if there was an error
+      if (error) {
+        return;
       }
     }
 
@@ -113,13 +99,20 @@ const Bookings = ({ showBookingModal, setShowBookingModal }) => {
     }
   };
 
+  // Reset booking state and close modal
+  const handleClose = () => {
+    dispatch(resetBooking());
+    setCurrentStep(0);
+    setShowBookingModal(false);
+  };
+
   return (
     <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
       <div className="relative glass-modal flex flex-col p-8">
-        {/* Show close btn on first index  */}
-        {currentStep === 0 && (
+        {/* Show close btn on first and last index  */}
+        {(currentStep === 0 || currentStep === 5) && (
           <button
-            onClick={() => setShowBookingModal(false)}
+            onClick={handleClose}
             className="absolute top-4 right-4 glass-btn-light p-2 md:p-3 rounded-full border-2 border-white/15 hover:!translate-x-0 hover:!translate-y-0"
             aria-label="Close booking modal"
           >
@@ -140,7 +133,7 @@ const Bookings = ({ showBookingModal, setShowBookingModal }) => {
           {/* Previous Button */}
           <button
             onClick={prevStep}
-            disabled={currentStep === 0}
+            disabled={currentStep === 0 || currentStep === 5}
             className="px-4 py-2 rounded disabled:opacity-0 transition-opacity duration-200"
           >
             <GrPrevious
@@ -149,13 +142,16 @@ const Bookings = ({ showBookingModal, setShowBookingModal }) => {
             />
           </button>
 
-          {/* Progress Bar in Center */}
-          <div className="flex-1 flex justify-center px-4">
-            <ProgressBar currentStep={currentStep} totalSteps={3} />
-          </div>
+          {/* Progress Bar (From mui) in Center */}
+          <ProgressBar
+            currentStep={currentStep}
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+            numberOfGuests={numberOfGuests}
+          />
 
           {/* Next Button */}
-          {currentStep < steps.length - 1 ? (
+          {currentStep < 4 && isStepValid() ? (
             <button
               onClick={nextStep}
               className="px-4 py-2 rounded transition-transform duration-200 hover:scale-110"
@@ -166,15 +162,7 @@ const Bookings = ({ showBookingModal, setShowBookingModal }) => {
               />
             </button>
           ) : (
-            <button
-              onClick={() => setShowBookingModal(false)}
-              className="px-4 py-2 rounded text-primary-text-light transition-transform duration-200 hover:scale-110"
-            >
-              <FaRegCircleCheck
-                className="w-5 h-5 md:w-6 md:h-6 text-primary-text-light"
-                aria-label="Close booking modal"
-              />
-            </button>
+            <div className="w-10 h-10"></div>
           )}
         </div>
       </div>

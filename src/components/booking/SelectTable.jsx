@@ -93,29 +93,6 @@ const SelectTable = () => {
 
   return (
     <div className="space-y-6">
-      {/* Summary */}
-      {selectedDate && selectedTime && numberOfGuests && (
-        <div className="mt-6 p-4 w-full rounded-lg glass-modal text-primary-text-light">
-          <h3 className="text-primary-text-light font-medium text-md md:text-lg mb-2">
-            Overview
-          </h3>
-          <p className="text-primary-text-light">
-            <span className="text-sm lg:font-medium text-primary-text-light">
-              {selectedDate}&nbsp;
-            </span>
-            at&nbsp;
-            <span className="text-sm lg:font-medium text-primary-text-light">
-              {selectedTime}
-            </span>
-            <br />
-            <span className="text-sm lg:font-medium text-primary-text-light">
-              {numberOfGuests}
-            </span>
-            &nbsp;
-            {numberOfGuests === 1 ? "guest" : "guests"}
-          </p>
-        </div>
-      )}
       {/* Table found */}
       {availableTables.length > 0 && selectedTable ? (
         <div className="bg-green-500/30 border border-green-400 text-primary-text-light p-4 rounded-lg font-semibold text-center">

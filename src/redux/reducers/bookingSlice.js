@@ -15,6 +15,9 @@ const initialState = {
   PhoneNumber: "",
   Email: "",
 
+  // Store booking confirmation details
+  bookingConfirmation: null,
+
   // UI state
   isLoading: false,
   error: null,
@@ -54,7 +57,10 @@ const bookingSlice = createSlice({
       state.Email = action.payload;
     },
 
-    // Actions: Confirm booking
+    // Actions: Booking confirmation
+    setBookingConfirmation: (state, action) => {
+      state.bookingConfirmation = action.payload;
+    },
 
     // UI state
     setLoading: (state, action) => {
@@ -87,6 +93,7 @@ export const {
   setName,
   setPhoneNumber,
   setEmail,
+  setBookingConfirmation,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;

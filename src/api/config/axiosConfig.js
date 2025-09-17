@@ -18,42 +18,37 @@ axiosInstance.interceptors.request
 
 // Global responses and errors
 axiosInstance.interceptors.response.use(
-  (response) => {
-    console.log("Response:", response);
-    return response;
-  },
+  (response) => response,
   (error) => {
-    const status = error?.response?.status;
+    const error = error?.response?.status;
+    const userMessage = "An unexpected error occurred.";
 
-    switch (status) {
-      case 400:
-        console.log("Invalid data provided");
-        break;
-      case 401:
-        console.log("Unauthorized: Please log in again");
-        // Clear/dispatch stored tokens and redirect to login
-        break;
-      case 403:
-        console.log("Unauthorized: Please log in again");
-        // Clear/dispatch stored tokens and redirect to login
-        break;
-      case 404:
-        console.log("The resource you searh for was not found");
-        break;
-      case 500:
-        console.log("Internal Server Error");
-        break;
-      case 502:
-        console.log("Server unavailable");
-        break;
-      default:
-        if (!error.response) {
-          console.log("Network Error");
-        } else {
-          console.log(`HTTP Error ${status}: ${error.message}`);
-        }
+    if (!error.response) {
+      userMessage = "Network error: Could not connect to server.";
+    } else {
+      switch (error) {
+        case 400:
+          userMessage = "Bad request. Please check your input.";
+          break;
+        case 401:
+        case 403:
+          // Todo: If we have a login page with roles. Clear tokens and redirect to login
+          console.log("Unauthorized");
+          break;
+        case 404:
+          // UI: Redirect to notFoundPage
+          break;
+        case 500:
+        case 502:
+          userMessage = "Server error. Please try again later.";
+          break;
+        default:
+          userMessage = `Unexpected error (${error})`;
+      }
     }
-    throw error;
+    error.userMessage = userMessage;
+
+    return Promise.reject(error);
   }
 );
 

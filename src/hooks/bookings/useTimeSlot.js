@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {
+  setError,
+  clearError,
+  setLoading,
+} from "../../redux/reducers/bookingSlice";
 import { bookingService } from "../../api/services/bookingService";
 
 export const useTimeSlot = () => {
   const [timeSlots, setTimeSlots] = useState([]);
-  const [error, setError] = useState(null); // Unic error state for Time-Slot hook
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getTimeSlots = async () => {
-      setError(null);
+      dispatch(setLoading(true));
+      dispatch(clearError());
+
       try {
         const response = await bookingService.timeSlot();
         const formattedTimeSlots = (response.data || []).map((timeSlot) => {
@@ -15,12 +23,17 @@ export const useTimeSlot = () => {
         });
         setTimeSlots(formattedTimeSlots);
       } catch (error) {
-        setError("Failed to load available time-slots");
+        const errorMessage =
+          error.userMessage || "Failed to load available time slots";
+        dispatch(setError(errorMessage));
+        return null;
+      } finally {
+        dispatch(setLoading(false));
       }
     };
 
     getTimeSlots();
-  }, []);
+  }, [dispatch]);
 
-  return { timeSlots, error };
+  return { timeSlots };
 };

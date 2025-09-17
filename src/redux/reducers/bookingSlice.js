@@ -1,17 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  // Select Date/Time/Guests
+  // Store Date/Time/Guests
   selectedDate: "",
   selectedTime: "",
   numberOfGuests: 1,
 
-  // Select available table
+  // Store available table
   availableTables: [],
   selectedTable: null,
 
-  // Step 3 - Leave contact details and wrap up reservation
-  // Step 4 - Confirm booking, error handling, booking.nr? api-call
+  // Store customer contact details for reservation
+  Name: "",
+  PhoneNumber: "",
+  Email: "",
 
   // UI state
   isLoading: false,
@@ -42,6 +44,16 @@ const bookingSlice = createSlice({
     },
 
     // Actions: Leave contact details and wrap up reservation
+    setName: (state, action) => {
+      state.Name = action.payload;
+    },
+    setPhoneNumber: (state, action) => {
+      state.PhoneNumber = action.payload;
+    },
+    setEmail: (state, action) => {
+      state.Email = action.payload;
+    },
+
     // Actions: Confirm booking
 
     // UI state
@@ -72,6 +84,9 @@ export const {
   setError,
   clearError,
   resetBooking,
+  setName,
+  setPhoneNumber,
+  setEmail,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;

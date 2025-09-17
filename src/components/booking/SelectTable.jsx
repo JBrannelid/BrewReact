@@ -15,7 +15,9 @@ const findOptimalTable = (tables, guests) => {
     .filter((table) => table.capacity >= guests)
     .sort((a, b) => a.capacity - b.capacity);
 
-  return sortedTables[0] || tables[0];
+  console.log("Available Table:", sortedTables);
+  // Return the smallest table that fits the guests, or null if none found
+  return sortedTables[0] || null;
 };
 
 const SelectTable = () => {

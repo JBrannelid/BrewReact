@@ -1,8 +1,6 @@
 import axiosInstance from "../config/axiosConfig";
 
 export const bookingService = {
-  get: () => axiosInstance.get("Bookings"),
-
   getAvailableTables: (data) =>
     axiosInstance.post("Bookings/available-tables", data),
 

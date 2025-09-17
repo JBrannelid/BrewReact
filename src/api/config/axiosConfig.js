@@ -20,13 +20,13 @@ axiosInstance.interceptors.request
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    const error = error?.response?.status;
-    const userMessage = "An unexpected error occurred.";
+    const apiError = error?.response?.status;
+    let userMessage = "An unexpected error occurred.";
 
     if (!error.response) {
       userMessage = "Network error: Could not connect to server.";
     } else {
-      switch (error) {
+      switch (apiError) {
         case 400:
           userMessage = "Bad request. Please check your input.";
           break;
@@ -36,14 +36,14 @@ axiosInstance.interceptors.response.use(
           console.log("Unauthorized");
           break;
         case 404:
-          // UI: Redirect to notFoundPage
+          window.location.href = "/notFound";
           break;
         case 500:
         case 502:
           userMessage = "Server error. Please try again later.";
           break;
         default:
-          userMessage = `Unexpected error (${error})`;
+          userMessage = `Unexpected error (${apiError})`;
       }
     }
     error.userMessage = userMessage;

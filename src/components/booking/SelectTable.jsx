@@ -1,13 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setAvailableTables,
-  setSelectedTable,
-  setLoading,
-  setError,
-  clearError,
-} from "../../redux/reducers/bookingSlice";
-import useGetAvailableTables from "../../hooks/bookings/useGetAvailableTables";
+import { setSelectedTable } from "../../redux/reducers/bookingSlice";
 
 // Select the best fitting table based on number of guests
 const findOptimalTable = (tables, guests) => {
@@ -15,60 +8,22 @@ const findOptimalTable = (tables, guests) => {
     .filter((table) => table.capacity >= guests)
     .sort((a, b) => a.capacity - b.capacity);
 
-  console.log("Available Table:", sortedTables);
   // Return the smallest table that fits the guests, or null if none found
   return sortedTables[0] || null;
 };
 
 const SelectTable = () => {
   const dispatch = useDispatch();
-  const {
-    selectedDate,
-    selectedTime,
-    numberOfGuests,
-    availableTables,
-    selectedTable,
-    isLoading,
-    error,
-  } = useSelector((state) => state.booking);
+  const { numberOfGuests, availableTables, selectedTable, isLoading, error } =
+    useSelector((state) => state.booking);
 
-  // Call api endpoint from custom hook
-  const { getAvailableTables } = useGetAvailableTables();
-
-  // Fetch available tables when date, time, or number of guests changes
+  // Auto-select optimal table when available tables change
   useEffect(() => {
-    const fetchAvailableTables = async () => {
-      if (selectedDate && selectedTime && numberOfGuests) {
-        dispatch(setLoading(true));
-        dispatch(clearError());
-
-        try {
-          // Call api endpoint
-          const response = await getAvailableTables({
-            bookingDate: selectedDate,
-            bookingTime: selectedTime,
-            numberGuests: numberOfGuests,
-          });
-
-          const tables = response.data || [];
-          dispatch(setAvailableTables(tables));
-
-          if (tables.length > 0) {
-            const bestTable = findOptimalTable(tables, numberOfGuests);
-            dispatch(setSelectedTable(bestTable));
-          }
-        } catch (error) {
-          dispatch(
-            setError("Failed to load available tables. Please try again.")
-          );
-        } finally {
-          dispatch(setLoading(false));
-        }
-      }
-    };
-
-    fetchAvailableTables();
-  }, [selectedDate, selectedTime, numberOfGuests]);
+    if (availableTables.length > 0 && !selectedTable) {
+      const bestTable = findOptimalTable(availableTables, numberOfGuests);
+      dispatch(setSelectedTable(bestTable));
+    }
+  }, [availableTables, numberOfGuests, selectedTable, dispatch]);
 
   if (isLoading) {
     return (
@@ -100,7 +55,7 @@ const SelectTable = () => {
             We found a table for you!
           </h3>
           <p className="text-primary-text-light/80">
-            Please procceding with your booking to confirm your table
+            Please proceed with your booking to confirm your table
           </p>
         </div>
       ) : (

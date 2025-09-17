@@ -1,88 +1,82 @@
-import { HiUsers, HiCalendar, HiClock } from "react-icons/hi2";
-import { useSelector } from "react-redux";
+import { Stepper, Step, StepLabel, Stack } from "@mui/material";
+import { FiUsers, FiCalendar, FiClock } from "react-icons/fi";
 
-const ProgressBar = ({ currentStep, totalSteps = 3 }) => {
-  // Get necessary booking details from Redux
-  const { selectedDate, selectedTime, numberOfGuests } = useSelector(
-    (state) => state.booking
-  );
+// Custom Step Icon Component
+const CustomStepIcon = ({ active, completed, icon }) => (
+  <div
+    className={`progress-step-icon ${
+      completed ? "completed" : active ? "active" : "inactive"
+    }`}
+  >
+    {icon}
+  </div>
+);
 
-  const stepIcons = [
-    HiUsers, // Step 0
-    HiCalendar, // Step 1
-    HiClock, // Step 2
-  ];
-
-  // Display data for each step
-  const displayData = [
-    // Step 0
-    numberOfGuests > 0 ? `${numberOfGuests} guests` : null,
-    // Step 1
-    selectedDate
-      ? // Format date to "DD MMM"
-        new Date(selectedDate).toLocaleDateString("sv-SE", {
-          month: "short",
-          day: "numeric",
-        })
-      : null,
-    // Step 2
-    selectedTime || null,
+const ProgressBar = ({
+  currentStep,
+  selectedDate,
+  selectedTime,
+  numberOfGuests,
+}) => {
+  // step 1-3 is defined. This steps is mapped to progress bar
+  const progressSteps = [
+    {
+      label: "Guests",
+      info: numberOfGuests || "--",
+      icon: <FiUsers size={18} />,
+      completed: currentStep > 0,
+      active: currentStep === 0,
+    },
+    {
+      label: "Date",
+      info: selectedDate
+        ? new Date(selectedDate).toLocaleDateString("sv-SE", {
+            day: "numeric",
+            month: "short",
+          })
+        : "--",
+      icon: <FiCalendar size={18} />,
+      completed: currentStep > 1,
+      active: currentStep === 1,
+    },
+    {
+      label: "Time",
+      info: selectedTime || "--",
+      icon: <FiClock size={18} />,
+      completed: currentStep > 2,
+      active: currentStep === 2,
+    },
   ];
 
   return (
-    <div className="flex items-center justify-center space-x-2 sm:space-x-3">
-      {Array.from({ length: totalSteps }, (_, index) => {
-        const Icon = stepIcons[index];
-        const isCurrentStep = index === currentStep;
-        const isCompletedStep = index < currentStep;
-        const stepInfo = displayData[index];
-
-        return (
-          <div key={index} className="flex items-center">
-            {/* Step container with icon and info */}
-            <div className="flex flex-col items-center">
-              {/* Icon */}
-              <div
-                className={`
-                  relative flex items-center justify-center 
-                  w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full transition-all duration-300
-                  ${
-                    isCurrentStep
-                      ? "bg-primary-text-light transform scale-110"
-                      : isCompletedStep
-                        ? "bg-green-500/20"
-                        : "bg-primary-text-light/20"
-                  }
-                `}
-              >
-                <Icon
-                  className={`
-                    w-3 h-3 sm:w-4 sm:h-4 transition-colors duration-300
-                    ${isCurrentStep ? "text-black" : "text-primary-text-light"}
-                  `}
-                />
-              </div>
-
-              {/* Step information from Redux */}
-              {stepInfo && (
-                <div className="mt-1 text-xs sm:text-sm text-primary-text-light/80 font-medium">
-                  {stepInfo}
+    <Stack className="flex-1 mx-4">
+      <Stepper activeStep={currentStep} orientation="horizontal">
+        {progressSteps.map((step, index) => (
+          <Step key={index} completed={step.completed}>
+            <StepLabel
+              slots={{
+                stepIcon: () => (
+                  <CustomStepIcon
+                    active={step.active}
+                    completed={step.completed}
+                    icon={step.icon}
+                  />
+                ),
+              }}
+            >
+              <div className="text-center">
+                <div className="text-xs font-medium text-white">
+                  {step.label}
                 </div>
-              )}
-            </div>
-
-            {/* Line divider */}
-            {index < totalSteps - 1 && (
-              <div
-                className={`
-                  w-4 sm:w-6 h-0.5 mx-2 sm:mx-3 "}
-                `}
-              />
-            )}
-          </div>
-        );
-      })}
-    </div>
+                <div className="text-xs text-white/70 mt-0.5 font-semibold">
+                  {step.info}
+                </div>
+              </div>
+            </StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+    </Stack>
   );
 };
 

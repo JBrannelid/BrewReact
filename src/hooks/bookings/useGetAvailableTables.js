@@ -19,8 +19,17 @@ export default function useGetAvailableTables() {
       dispatch(setAvailableTables(response.data || []));
       return response;
     } catch (error) {
-      const errorMessage =
-        error.userMessage || "Failed to load available tables";
+      // Unique error messages not handle by axios interceptors
+      let errorMessage;
+
+      if (error.response?.status === 400) {
+        errorMessage = "Invalid date or time selected. Please check your input";
+      } else if (error.response?.status === 404) {
+        errorMessage = "No available tables found";
+      } else {
+        errorMessage = error.userMessage;
+      }
+
       dispatch(setError(errorMessage));
       return null;
     } finally {

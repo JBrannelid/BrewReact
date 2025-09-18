@@ -17,7 +17,15 @@ export default function useCreateCustomer() {
       const response = await customerService.create(data);
       return response;
     } catch (error) {
-      const errorMessage = error.userMessage || "Failed to create customer";
+      // Unique error messages not handle by axios interceptors
+      let errorMessage;
+
+      if (error.response?.status === 400) {
+        errorMessage = "Invalid customer details. Please check your input.";
+      } else {
+        errorMessage = error.userMessage;
+      }
+
       dispatch(setError(errorMessage));
       return null;
     } finally {

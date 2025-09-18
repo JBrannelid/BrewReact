@@ -23,8 +23,15 @@ export const useTimeSlot = () => {
         });
         setTimeSlots(formattedTimeSlots);
       } catch (error) {
-        const errorMessage =
-          error.userMessage || "Failed to load available time slots";
+        // Unique error messages not handle by axios interceptors
+        let errorMessage;
+
+        if (error.response?.status === 400) {
+          errorMessage = "Unable to load time-slots. Please refresh the page";
+        } else {
+          errorMessage = error.userMessage;
+        }
+
         dispatch(setError(errorMessage));
         return null;
       } finally {

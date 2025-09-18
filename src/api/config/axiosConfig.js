@@ -22,10 +22,21 @@ axiosInstance.interceptors.response.use(
   (error) => {
     const apiError = error?.response?.status;
     let userMessage = "";
-
+    // Handle HTTP response errors
     if (!error.response) {
-      console.log("Network error: ", error.response.data);
-      userMessage = "Network error: Check your connection or firewall";
+      console.log("Network error: ", error.message || error);
+      // Handle backend not reachable errors
+      if (
+        error.code === "ERR_NETWORK" ||
+        error.code === "ERR_CONNECTION_REFUSED"
+      ) {
+        userMessage =
+          "Unable to connect to server. Check your connection or firewall or try again later";
+      } else if (error.code === "ECONNABORTED") {
+        userMessage = "Request timeout. Please try again";
+      } else {
+        userMessage = "Unexpected error occurred. Please try again later";
+      }
     } else {
       switch (apiError) {
         case 400:
@@ -49,7 +60,7 @@ axiosInstance.interceptors.response.use(
           userMessage = `Unexpected error (${apiError})`;
       }
     }
-    error.userMessage = userMessage;
+    error.userMessage = userMessage || "Something went wrong";
 
     return Promise.reject(error);
   }

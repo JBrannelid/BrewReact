@@ -16,33 +16,36 @@ axiosInstance.interceptors.request
   // Ex. Retreive token from Redux OR context Hook
   ();
 
-// Global responses and errors
+// Global error handeling and logging
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     const apiError = error?.response?.status;
-    let userMessage = "An unexpected error occurred.";
+    let userMessage = "";
 
     if (!error.response) {
-      userMessage = "Network error: Could not connect to server.";
+      console.log("Network error: ", error.response.data);
+      userMessage = "Network error: Check your connection or firewall";
     } else {
       switch (apiError) {
         case 400:
-          userMessage = "Bad request. Please check your input.";
+          console.log("Bad Request: ", error.response.data);
           break;
         case 401:
         case 403:
           // Todo: If we have a login page with roles. Clear tokens and redirect to login
-          console.log("Unauthorized");
+          console.log("Unauthorized: ", error.response.data);
           break;
         case 404:
-          window.location.href = "/notFound";
+          console.log("Not Found: ", error.response.data);
           break;
         case 500:
         case 502:
-          userMessage = "Server error. Please try again later.";
+          console.log("Server Error: ", error.response.data);
+          userMessage = "Internal server error. Please try again later";
           break;
         default:
+          console.log("Unexpected error: ", error.response.data);
           userMessage = `Unexpected error (${apiError})`;
       }
     }
